@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//route for verification
+Route::get("/trivia", "MainController@receive")->middleware("verify");
+
+//where Facebook sends messages to. No need to attach the middleware to this because the verification is via GET
+Route::post("/trivia", "MainController@receive");
