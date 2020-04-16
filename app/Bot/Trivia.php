@@ -50,13 +50,8 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "Next question",
+                    "title" => "More question",
                     "payload" => "new"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Thank you",
-                    "payload" => "bye"
                 ]
             ]
         ];
