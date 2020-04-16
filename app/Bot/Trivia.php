@@ -31,7 +31,7 @@ class Trivia
         Cache::forget("solution");
 
         //make API call and decode result to get general-knowledge trivia question
-        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=19&type=multiple&encode=base64");
+        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=19&type=multiple");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
