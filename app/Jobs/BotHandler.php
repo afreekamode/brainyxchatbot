@@ -50,7 +50,7 @@ class BotHandler implements ShouldQueue
             $bot->sendWelcomeMessage();
             $bot->reply(Trivia::getNew());
         }else if ($custom["type"] == Trivia::$NEW_BYE) {
-            $bot->reply('Any time Byeee and thank you for been around!');
+            $bot->reply(Trivia::getByeMsg());
         } else {
             $bot->reply("I don't understand. Please try \"new\" for a new question");
         }

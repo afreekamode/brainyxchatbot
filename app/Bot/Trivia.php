@@ -2,7 +2,7 @@
 
 namespace App\Bot;
 
-
+use Dotenv\Result\Result;
 use Illuminate\Support\Facades\Cache;
 
 class Trivia
@@ -31,13 +31,19 @@ class Trivia
         Cache::forget("solution");
 
         //make API call and decode result to get general-knowledge trivia question
-        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=9&type=multiple");
+        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=19&type=multiple&encode=base64");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = json_decode(curl_exec($ch), true)["results"][0];
 
         return new Trivia($result);
+    }
+
+    public static function getByeMsg()
+    {
+    
+        return 'Byeee see you around!';
     }
 
     public static function checkAnswer($answer)
