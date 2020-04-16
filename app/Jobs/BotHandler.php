@@ -44,11 +44,13 @@ class BotHandler implements ShouldQueue
             if (Cache::has("solution")) {
                 $bot->reply(Trivia::checkAnswer($custom["data"]["answer"]));
             } else {
-                $bot->reply("Looks like that question has already been answered. Try \"new\" for a new question");
+                $bot->reply("Looks like that question has already been answered. Please try \"new\" for a new question");
             }
         } else if ($custom["type"] == "get-started") {
             $bot->sendWelcomeMessage();
             $bot->reply(Trivia::getNew());
+        }else if ($custom["type"] == "thanks" || $custom["type"] == "thank you" || $custom["type"] == "bye") {
+            $bot->reply('Any time Byeee!');
         } else {
             $bot->reply("I don't understand. Please try \"new\" for a new question");
         }
