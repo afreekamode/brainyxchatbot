@@ -2,39 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Bot\Webhook\Entry;
+use App\Jobs\BotHandler;
 use Illuminate\Http\Request;
-use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller
 {
-    public function webhook(Request $request)
+    public function receive(Request $request)
     {
-        $data = $request->all();
-        $id = $data["entry"][0]["messaging"][0]["sender"]["id"];
-        $senderMessage = $data["entry"][0]["messaging"][0]["message"];
-        if(!empty($senderMessage)){
-            $this->sendTextMessage($id, "Hi Buddy");
+        $entries = Entry::getEntries($request);
+        Log::info(print_r($entries, true));
+        foreach ($entries as $entry) {
+            $messagings = $entry->getMessagings();
+            foreach ($messagings as $messaging) {
+                dispatch(new BotHandler($messaging));
+            }
         }
+        return response("", 200);
     }
 
-    private function sendTextMessage($recipientId, $messageText)
-    {
-        $messageData = [
-            "recipient" => [
-                "id"=> $recipientId,
-            ],
-            "message" => [
-                "text"=> $messageText,
-            ],
-        ];
-        $curl = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . env("PAGE_ACCESS_TOKEN"));
-        curl_setopt_array($curl, array(
-        CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => json_encode($messageData),
-        ));
-
-        curl_exec($curl);
-        curl_close($curl);
-    }
 }
