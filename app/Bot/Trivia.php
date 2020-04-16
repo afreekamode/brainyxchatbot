@@ -43,8 +43,6 @@ class Trivia
     public static function getByeMsg()
     {
         $response = 'Byee see you around !';
-        return $response;
-        //clear solution
         $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
