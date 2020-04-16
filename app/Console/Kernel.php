@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\SetGreetingText::class,
-        Commands\SetGetStartedButton::class
+        Commands\SetGetStartedButton::class,
+        Commands\SetPersistentMenu::class,
     ];
 
     /**

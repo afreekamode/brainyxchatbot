@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 class Trivia
 {
     public static $NEW_QUESTION = "new";
+    public static $NEW_BYE = "bye";
     public static $ANSWER = "answer";
 
     private $question;
@@ -56,6 +57,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Next question",
                     "payload" => "new"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Thank you",
+                    "payload" => "bye"
                 ]
             ]
         ];

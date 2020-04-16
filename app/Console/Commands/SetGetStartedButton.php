@@ -40,6 +40,9 @@ class SetGetStartedButton extends Command
         $data = [
             "get_started" => [
                 "payload" => $this->argument("payload"),
+            ],
+            "bye" => [
+                "payload" => $this->argument("payload"),
             ]
         ];
         $ch = curl_init('https://graph.facebook.com/v2.6/me/messenger_profile?access_token=' . env("PAGE_ACCESS_TOKEN"));

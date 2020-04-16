@@ -47,6 +47,7 @@ class Bot
         } else if (preg_match("/^(new|next)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_QUESTION,
+                "type" => Trivia::$NEW_BYE,
                 "data" => []
             ];
         }
@@ -70,6 +71,7 @@ class Bot
         } else if ($payload === "get-started") {
             return [
                 "type" => "get-started",
+                "type" => "bye",
                 "data" => []
             ];
         }
