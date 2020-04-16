@@ -18,7 +18,7 @@ class Trivia
     {
         $this->question = $data["question"];
         $answer = $data["correct_answer"];
-        $this->options = $data["incorrect_answers"];
+        $this->options = array_slice($data["incorrect_answers"], 0, 2);
         $this->options[] = $answer;
         shuffle($this->options);
         $this->solution = $answer;
@@ -49,21 +49,46 @@ class Trivia
         }
         //clear solution
         Cache::forget("solution");
-        return $response;
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "Next question",
+                    "payload" => "new"
+                ]
+            ]
+        ];
     }
 
     public function toMessage()
     {
         //compose message
-        $response = "Question: $this->question.\nOptions:";
+        $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
+
+        $response = [
+            "attachment" => [
+                "type" => "template",
+                "payload" => [
+                    "template_type" => "button",
+                    "text" => $text,
+                    "buttons" => []
+                ]
+            ]
+        ];
+
         $letters = ["a", "b", "c", "d"];
         foreach ($this->options as $i => $option) {
-            $response.= "\n{$letters[$i]}: $option";
+            $response["attachment"]["payload"]["buttons"][] = [
+                "type" => "postback",
+                "title" => "{$letters[$i]}:" . htmlspecialchars_decode($option, ENT_QUOTES | ENT_HTML5),
+                "payload" => "{$letters[$i]}"
+            ];
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
             }
         }
 
-        return ["text" => $response];
+        return $response;
     }
 }
