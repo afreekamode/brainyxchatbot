@@ -12,6 +12,7 @@ class Trivia
     public static $NEW_MATHS = "maths";
     public static $NEW_SPORT = "sport";
     public static $NEW_CATOON = "catoon";
+    public static $NEW_MOVIE = "movie";
     public static $NEW_BYE = "bye";
     public static $NEW_HELLO = "hello";
     public static $NEW_HI = "hi";
@@ -102,10 +103,24 @@ class Trivia
 
         return new Trivia($result);
     }
+    public static function getMovie()
+    {
+        //clear any past solutions left in the cache
+        Cache::forget("solution");
+
+        //make API call and decode result to get catoon trivia question
+        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=11&type=multiple");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = json_decode(curl_exec($ch), true)["results"][0];
+
+        return new Trivia($result);
+    }
     
     public static function getHello()
     {
-        $response = 'Hi! would you like to play game? check the following options';
+        $response = 'Hi Welcome to BrainyX ! would you like to refresh your mind? check the following options';
         $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
@@ -120,6 +135,25 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Catoon questions",
                     "payload" => "catoon"
+                ], [
+                    "content_type" => "text",
+                    "title" => "Maths questions",
+                    "payload" => "maths"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Sport questions",
+                    "payload" => "sport"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Movie questions",
+                    "payload" => "movie"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Animal questions",
+                    "payload" => "animal"
                 ]
             ]
         ];
@@ -180,6 +214,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Catoon questions",
                     "payload" => "catoon"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Movie questions",
+                    "payload" => "movie"
                 ],
                 [
                     "content_type" => "text",

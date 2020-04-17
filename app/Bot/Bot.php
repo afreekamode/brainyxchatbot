@@ -69,6 +69,11 @@ class Bot
                 "type" => Trivia::$NEW_ANIMAL,
                 "data" => []
             ];
+        }else if (preg_match("/^(movie|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_MOVIE,
+                "data" => []
+            ];
         }else if (preg_match("/^(bye|next)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_BYE,
@@ -120,6 +125,11 @@ class Bot
         }else if ($payload === "sport") {
             return [
                 "type" => "sport",
+                "data" => []
+            ];
+        }else if ($payload === "movie") {
+            return [
+                "type" => "movie",
                 "data" => []
             ];
         }else if ($payload === "maths") {
