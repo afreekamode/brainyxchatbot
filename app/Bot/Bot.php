@@ -49,6 +49,21 @@ class Bot
                 "type" => Trivia::$NEW_QUESTION,
                 "data" => []
             ];
+        }else if (preg_match("/^(catoon|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_CATOON,
+                "data" => []
+            ];
+        }else if (preg_match("/^(maths|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_MATHS,
+                "data" => []
+            ];
+        }else if (preg_match("/^(sport|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_SPORT,
+                "data" => []
+            ];
         } else if (preg_match("/^(animal|next)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_ANIMAL,
