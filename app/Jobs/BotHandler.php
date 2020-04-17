@@ -43,13 +43,13 @@ class BotHandler implements ShouldQueue
         }else if ($custom["type"] == Trivia::$NEW_ANIMAL) {
             $bot->reply(Trivia::getAnimal());
         }else if ($custom["type"] == Trivia::$NEW_MATHS) {
-            $bot->reply(Trivia::getAnimal());
+            $bot->reply(Trivia::getMaths());
         }else if ($custom["type"] == Trivia::$NEW_CATOON) {
-            $bot->reply(Trivia::getAnimal());
+            $bot->reply(Trivia::getCatoon());
         }else if ($custom["type"] == Trivia::$NEW_MOVIE) {
             $bot->reply(Trivia::getMovie());
         }else if ($custom["type"] == Trivia::$NEW_SPORT) {
-            $bot->reply(Trivia::getAnimal());
+            $bot->reply(Trivia::getSport());
         } else if ($custom["type"] == Trivia::$ANSWER) {
             if (Cache::has("solution")) {
                 $bot->reply(Trivia::checkAnswer($custom["data"]["answer"]));
@@ -65,12 +65,7 @@ class BotHandler implements ShouldQueue
         }else if ($custom["type"] == Trivia::$NEW_BYE) {
             $bot->reply(Trivia::getByeMsg());
         }else if ($custom["type"] == Trivia::$NEW_HELLO || $custom["type"] == Trivia::$NEW_HI) {
-            $solution = Cache::has("solution");
-            if ($solution > 0) {
-                $bot->reply("Hi welcome back it looks your previous question has already been answered. Please try \"new\" or \"movie\" for a new question");
-            } else {
                 $bot->reply(Trivia::getHello());
-            }
         } else {
             $bot->reply("I don't understand. Please try \"new\" or \"animal\" for a new question");
         }
