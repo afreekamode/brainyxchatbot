@@ -132,7 +132,7 @@ class Bot
     public function sendWelcomeMessage()
     {
         $name = $this->getUserDetails()["first_name"];
-        $this->reply("Hi there, $name! Welcome I am AuntyB! You can type \"new\" to get a new question, but why don’t we start with this one?");
+        $this->reply("Hi there, $name! Welcome I am BrainyX! You can type \"new\" to get a new question, but why don’t we start with this one?");
     }
 
     private function getUserDetails()

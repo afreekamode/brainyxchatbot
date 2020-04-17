@@ -42,6 +42,12 @@ class BotHandler implements ShouldQueue
             $bot->reply(Trivia::getNew());
         }else if ($custom["type"] == Trivia::$NEW_ANIMAL) {
             $bot->reply(Trivia::getAnimal());
+        }else if ($custom["type"] == Trivia::$NEW_MATHS) {
+            $bot->reply(Trivia::getAnimal());
+        }else if ($custom["type"] == Trivia::$NEW_CATOON) {
+            $bot->reply(Trivia::getAnimal());
+        }else if ($custom["type"] == Trivia::$NEW_SPORT) {
+            $bot->reply(Trivia::getAnimal());
         } else if ($custom["type"] == Trivia::$ANSWER) {
             if (Cache::has("solution")) {
                 $bot->reply(Trivia::checkAnswer($custom["data"]["answer"]));
