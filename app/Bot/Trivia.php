@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 class Trivia
 {
     public static $NEW_QUESTION = "new";
+    public static $NEW_ANIMAL = "animal";
     public static $NEW_BYE = "bye";
     public static $ANSWER = "answer";
 
@@ -40,6 +41,21 @@ class Trivia
         return new Trivia($result);
     }
 
+    public static function getAnimal()
+    {
+        //clear any past solutions left in the cache
+        Cache::forget("solution");
+
+        //make API call and decode result to get general-knowledge trivia question
+        $ch = curl_init("https://opentdb.com/api.php?amount=1&category=27&type=multiple");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = json_decode(curl_exec($ch), true)["results"][0];
+
+        return new Trivia($result);
+    }
+
     public static function getByeMsg()
     {
         $response = 'Byee see you around !';
@@ -50,7 +66,7 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "More question",
+                    "title" => "More questions",
                     "payload" => "new"
                 ]
             ]
@@ -77,8 +93,13 @@ class Trivia
                 ],
                 [
                     "content_type" => "text",
-                    "title" => "Thank you",
+                    "title" => "Thank you, bye !",
                     "payload" => "bye"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Animal question",
+                    "payload" => "animal"
                 ]
             ]
         ];

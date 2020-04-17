@@ -49,6 +49,11 @@ class Bot
                 "type" => Trivia::$NEW_QUESTION,
                 "data" => []
             ];
+        } else if (preg_match("/^(animal|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_ANIMAL,
+                "data" => []
+            ];
         }else if (preg_match("/^(bye|next)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_BYE,
@@ -75,6 +80,11 @@ class Bot
         } else if ($payload === "get-started") {
             return [
                 "type" => "get-started",
+                "data" => []
+            ];
+        }else if ($payload === "get-animal") {
+            return [
+                "type" => "get-animal",
                 "data" => []
             ];
         }else if ($payload === "bye") {
