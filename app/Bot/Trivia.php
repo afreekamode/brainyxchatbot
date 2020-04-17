@@ -100,9 +100,10 @@ class Trivia
 
         return new Trivia($result);
     }
-
-    public static function getByeMsg()
+    
+    public static function getByeMsg($msg)
     {
+        if($msg == 'bye'){
         $response = 'Byee see you around !';
         $solution = Cache::get("solution");
         Cache::forget("solution");
@@ -113,6 +114,26 @@ class Trivia
                     "content_type" => "text",
                     "title" => "More questions",
                     "payload" => "new"
+                ]
+            ]
+        ];
+        }elseif($msg == 'Hi' || $msg == 'Hello'){
+        $response = 'Hi! would you like to play game? check the following options';
+        }
+        $solution = Cache::get("solution");
+        Cache::forget("solution");
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "General questions",
+                    "payload" => "new"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Catoon questions",
+                    "payload" => "catoon"
                 ]
             ]
         ];
