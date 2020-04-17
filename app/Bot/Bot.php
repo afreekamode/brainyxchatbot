@@ -102,6 +102,21 @@ class Bot
                 "type" => "get-animal",
                 "data" => []
             ];
+        }else if ($payload === "catoon") {
+            return [
+                "type" => "catoon",
+                "data" => []
+            ];
+        }else if ($payload === "sport") {
+            return [
+                "type" => "sport",
+                "data" => []
+            ];
+        }else if ($payload === "maths") {
+            return [
+                "type" => "maths",
+                "data" => []
+            ];
         }else if ($payload === "bye") {
             return [
                 "type" => "bye",
