@@ -89,6 +89,11 @@ class Bot
                 "type" => Trivia::$NEW_HI,
                 "data" => []
             ];
+        }else if (preg_match("/^(menu|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_MENU,
+                "data" => []
+            ];
         }
         return [
             "type" => "unknown",
@@ -140,6 +145,11 @@ class Bot
         }else if ($payload === "bye") {
             return [
                 "type" => "bye",
+                "data" => []
+            ];
+        }else if ($payload === "menu") {
+            return [
+                "type" => "menu",
                 "data" => []
             ];
         }

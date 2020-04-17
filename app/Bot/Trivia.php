@@ -16,6 +16,7 @@ class Trivia
     public static $NEW_BYE = "bye";
     public static $NEW_HELLO = "hello";
     public static $NEW_HI = "hi";
+    public static $NEW_MENU = "menu";
     public static $ANSWER = "answer";
 
     private $question;
@@ -128,6 +129,28 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
+                    "title" => "Menu",
+                    "payload" => "menu"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Thank you, bye !",
+                    "payload" => "bye"
+                ]
+            ]
+        ];
+    }
+
+    public static function getMenu()
+    {
+        $response = 'Pick a category';
+        $solution = Cache::get("solution");
+        Cache::forget("solution");
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
                     "title" => "General questions",
                     "payload" => "new"
                 ],
@@ -169,8 +192,8 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "More questions",
-                    "payload" => "new"
+                    "title" => "Menu",
+                    "payload" => "menu"
                 ]
             ]
         ];
@@ -192,33 +215,8 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "New question",
-                    "payload" => "new"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Maths questions",
-                    "payload" => "maths"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Sport questions",
-                    "payload" => "sport"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Animal questions",
-                    "payload" => "animal"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Catoon questions",
-                    "payload" => "catoon"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Movie questions",
-                    "payload" => "movie"
+                    "title" => "Menu",
+                    "payload" => "menu"
                 ],
                 [
                     "content_type" => "text",

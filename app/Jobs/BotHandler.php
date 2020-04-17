@@ -40,6 +40,8 @@ class BotHandler implements ShouldQueue
         //a request for a new question
         if ($custom["type"] == Trivia::$NEW_QUESTION) {
             $bot->reply(Trivia::getNew());
+        }else if ($custom["type"] == Trivia::$NEW_MENU) {
+            $bot->reply(Trivia::getMenu());
         }else if ($custom["type"] == Trivia::$NEW_ANIMAL) {
             $bot->reply(Trivia::getAnimal());
         }else if ($custom["type"] == Trivia::$NEW_MATHS) {
@@ -64,8 +66,17 @@ class BotHandler implements ShouldQueue
             $bot->reply(Trivia::getAnimal());
         }else if ($custom["type"] == Trivia::$NEW_BYE) {
             $bot->reply(Trivia::getByeMsg());
-        }else if ($custom["type"] == Trivia::$NEW_HELLO || $custom["type"] == Trivia::$NEW_HI) {
+        }else if ($custom["type"] == Trivia::$NEW_HELLO || $custom["type"] == Trivia::$NEW_HI || $custom["type"] == 'Thank you' || $custom["type"] == 'Thanks') {
                 $bot->reply(Trivia::getHello());
+        }else if ($custom["type"] == "Good Moring" || $custom["type"] == "Morning" || $custom["type"] == 'Good morning Brainy') {
+            $bot->reply("Good mornig! Wanna play game?");
+        }else if ($custom["type"] == "Good Afternoon" || $custom["type"] == "Afternoon" || $custom["type"] == 'Good Afternoon Brainy') {
+            $bot->reply("Good Afternoon! Wanna play game?");
+        }else if ($custom["type"] == "Good Evening" || $custom["type"] == "Evening" || $custom["type"] == 'Good Evening Brainy') {
+            $bot->reply("Hi Evening! Wanna play game?");
+        }else if ($custom["type"] == "yes" || $custom["type"] == "yes i wanna play game" || $custom["type"] == "yes i want to play game" || $custom["type"] == 'wanna play' || $custom["type"] == 'lets play game' || $custom["type"] == 'lets play') {
+            $bot->reply("Ok fine pick your choice from the menu");
+            $bot->reply(Trivia::getMenu());
         } else {
             $bot->reply("I don't understand. Please try \"new\" or \"animal\" for a new question");
         }
