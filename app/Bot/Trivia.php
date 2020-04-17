@@ -13,6 +13,8 @@ class Trivia
     public static $NEW_SPORT = "sport";
     public static $NEW_CATOON = "catoon";
     public static $NEW_BYE = "bye";
+    public static $NEW_HELLO = "hello";
+    public static $NEW_HI = "hi";
     public static $ANSWER = "answer";
 
     private $question;
@@ -101,25 +103,9 @@ class Trivia
         return new Trivia($result);
     }
     
-    public static function getByeMsg($msg)
+    public static function getHello()
     {
-        if($msg == 'bye'){
-        $response = 'Byee see you around !';
-        $solution = Cache::get("solution");
-        Cache::forget("solution");
-        return [
-            "text" => $response,
-            "quick_replies" => [
-                [
-                    "content_type" => "text",
-                    "title" => "More questions",
-                    "payload" => "new"
-                ]
-            ]
-        ];
-        }elseif($msg == 'Hi' || $msg == 'Hello'){
         $response = 'Hi! would you like to play game? check the following options';
-        }
         $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
@@ -138,6 +124,24 @@ class Trivia
             ]
         ];
     }
+
+    public static function getByeMsg()
+    {
+        $response = 'Byee see you around !';
+        $solution = Cache::get("solution");
+        Cache::forget("solution");
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "More questions",
+                    "payload" => "new"
+                ]
+            ]
+        ];
+    }
+
 
     public static function checkAnswer($answer)
     {

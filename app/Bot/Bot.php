@@ -74,6 +74,16 @@ class Bot
                 "type" => Trivia::$NEW_BYE,
                 "data" => []
             ];
+        }else if (preg_match("/^(hello|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_HELLO,
+                "data" => []
+            ];
+        }else if (preg_match("/^(hi|next)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_HI,
+                "data" => []
+            ];
         }
         return [
             "type" => "unknown",
