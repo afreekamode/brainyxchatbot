@@ -120,7 +120,7 @@ class Trivia
     
     public static function getHello()
     {
-        $response = 'Hi Welcome to BrainyX ! would you like to refresh your mind? check the following options';
+        $response = 'Hi Welcome to BrainyX ! would you like to refresh your mind? Then check the following options';
         $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
