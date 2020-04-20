@@ -120,6 +120,7 @@ class Trivia
         $result = json_decode(curl_exec($ch), true)["results"][0];
 
         return new Trivia($result);
+        
     }
     
     public static function getHello()
@@ -190,7 +191,7 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "Menu",
+                    "title" => "Options",
                     "payload" => "menu"
                 ]
             ]
