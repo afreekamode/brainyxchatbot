@@ -197,47 +197,26 @@ class Trivia
         ];
     }
 
+    public static function getGreet()
+    {
+        $solution = Cache::get("solution");
+        $response = $solution.' Did you wanna play games?';
+        Cache::forget("solution");
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "Menu",
+                    "payload" => "menu"
+                ]
+            ]
+        ];
+    }
 
     public static function checkAnswer($answer)
     {
         $category = Cache::get("category");
-        $cat = [
-            [
-                "content_type" => "text",
-                "title" => "General questions",
-                "payload" => "new"
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Catoon questions",
-                "payload" => "catoon"
-            ], [
-                "content_type" => "text",
-                "title" => "Science: Mathematics",
-                "payload" => "maths"
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Sport questions",
-                "payload" => "sport"
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Movie questions",
-                "payload" => "movie"
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Animal questions",
-                "payload" => "animal"
-            ]
-        ];
-    $this->categories = array_slice($cat[], 0, 2);
-    shuffle($this->categories);
-    $pre_category = $this->categories[] = $category;
-    if($pre_category == $category){
-        return $pre_category;
-    }
         $solution = Cache::get("solution");
         if ($solution == strtolower($answer)) {
             $response = "Correct!";
@@ -249,7 +228,37 @@ class Trivia
         
         return [
             "text" => $response,
-            $pre_category
+            "quick_reply" => [
+                [
+                    "content_type" => "text",
+                    "title" => "General questions",
+                    "payload" => "new"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Catoon questions",
+                    "payload" => "catoon"
+                ], [
+                    "content_type" => "text",
+                    "title" => "Science: Mathematics",
+                    "payload" => "maths"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Sport questions",
+                    "payload" => "sport"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Movie questions",
+                    "payload" => "movie"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Animal questions",
+                    "payload" => "animal"
+                ]
+            ] == $category
         ];
     }
 
