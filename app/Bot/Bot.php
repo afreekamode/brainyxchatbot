@@ -97,6 +97,7 @@ class Bot
         }else if (preg_match("/^(good morning|good afternoon|morning|afternoon|evening|good evening)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_GREET,
+                "text" => $text,
                 "data" => []
             ];
         }
