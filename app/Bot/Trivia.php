@@ -218,7 +218,7 @@ class Trivia
         $category = Cache::get("category");
         $solution = Cache::get("solution");
         if ($solution == strtolower($answer)) {
-            $response = "Correct!";
+            $response = "Correct 👍!";
         } else {
             $response = "Wrong. Correct answer is $solution";
         }

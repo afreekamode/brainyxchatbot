@@ -94,7 +94,7 @@ class Bot
                 "type" => Trivia::$NEW_MENU,
                 "data" => []
             ];
-        }else if (preg_match("/^(good morning |good morning brainy|good afternoon|good afternoon brainy|morning|afternoon|evening|good evening|good evening brainy)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(good morning|good morning brainy|good afternoon|good afternoon brainy|morning|afternoon|evening|good evening|good evening brainy)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_GREET,
                 "text" => $text,
@@ -169,7 +169,6 @@ class Bot
             "data" => []
         ];
     }
-
     public function sendWelcomeMessage()
     {
         $name = $this->getUserDetails()["first_name"];
