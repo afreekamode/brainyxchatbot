@@ -201,7 +201,6 @@ class Trivia
     {
         $solution = Cache::get("solution");
         $response = "$solution, do you wanna play games?";
-        Cache::forget("solution");
         return [
             "text" => $response,
             "quick_replies" => [
