@@ -17,11 +17,13 @@ class Trivia
     public static $NEW_HELLO = "hello";
     public static $NEW_HI = "hi";
     public static $NEW_MENU = "menu";
+    public static $NEW_GREET = "greet";
     public static $ANSWER = "answer";
 
     private $question;
     private $options;
     private $solution;
+    private $category;
 
     public function __construct(array $data)
     {
@@ -31,6 +33,7 @@ class Trivia
         $this->options[] = $answer;
         shuffle($this->options);
         $this->solution = $answer;
+        $this->category = $data["category"];
     }
 
     public static function getNew()
@@ -131,11 +134,6 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Menu",
                     "payload" => "menu"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Thank you, bye !",
-                    "payload" => "bye"
                 ]
             ]
         ];
@@ -203,6 +201,8 @@ class Trivia
     public static function checkAnswer($answer)
     {
         $solution = Cache::get("solution");
+        $category = Cache::get("category");
+
         if ($solution == strtolower($answer)) {
             $response = "Correct!";
         } else {
@@ -210,22 +210,47 @@ class Trivia
         }
         //clear solution
         Cache::forget("solution");
-        return [
-            "text" => $response,
-            "quick_replies" => [
-                [
-                    "content_type" => "text",
-                    "title" => "Menu",
-                    "payload" => "menu"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Thank you, bye !",
-                    "payload" => "bye"
-                ]
+        $cat = [
+            [
+                "content_type" => "text",
+                "title" => "General questions",
+                "payload" => "new"
+            ],
+            [
+                "content_type" => "text",
+                "title" => "Catoon questions",
+                "payload" => "catoon"
+            ], [
+                "content_type" => "text",
+                "title" => "Science: Mathematics",
+                "payload" => "maths"
+            ],
+            [
+                "content_type" => "text",
+                "title" => "Sport questions",
+                "payload" => "sport"
+            ],
+            [
+                "content_type" => "text",
+                "title" => "Movie questions",
+                "payload" => "movie"
+            ],
+            [
+                "content_type" => "text",
+                "title" => "Animal questions",
+                "payload" => "animal"
             ]
         ];
+    $this->categories = array_slice($cat[], 0, 2);
+    shuffle($this->categories);
+    $pre_category = $this->categories[] = $category;
+    if($pre_category == $category){
+        return [
+            "text" => $response,
+            $pre_category
+        ];
     }
+}
 
     public function toMessage()
     {

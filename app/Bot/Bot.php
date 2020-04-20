@@ -79,12 +79,12 @@ class Bot
                 "type" => Trivia::$NEW_BYE,
                 "data" => []
             ];
-        }else if (preg_match("/^(hello|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(hello|hello there)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_HELLO,
                 "data" => []
             ];
-        }else if (preg_match("/^(hi|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(hi|hi there)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_HI,
                 "data" => []
@@ -92,6 +92,11 @@ class Bot
         }else if (preg_match("/^(menu|next)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_MENU,
+                "data" => []
+            ];
+        }else if (preg_match("/^(good morning|good afternoon|mornig|afternoon|evening|good evening)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_GREET,
                 "data" => []
             ];
         }
@@ -145,6 +150,11 @@ class Bot
         }else if ($payload === "bye") {
             return [
                 "type" => "bye",
+                "data" => []
+            ];
+        }else if ($payload === "greet") {
+            return [
+                "type" => "greet",
                 "data" => []
             ];
         }else if ($payload === "menu") {
