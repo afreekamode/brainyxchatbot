@@ -94,7 +94,7 @@ class Bot
                 "type" => Trivia::$NEW_MENU,
                 "data" => []
             ];
-        }else if (preg_match("/^(good morning|good afternoon|mornig|afternoon|evening|good evening)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(good morning|good afternoon|morning|afternoon|evening|good evening)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_GREET,
                 "data" => []

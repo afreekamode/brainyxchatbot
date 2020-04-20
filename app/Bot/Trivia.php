@@ -200,7 +200,7 @@ class Trivia
     public static function getGreet()
     {
         $solution = Cache::get("solution");
-        $response = $solution.' Did you wanna play games?';
+        $response = "$solution, do you wanna play games?";
         Cache::forget("solution");
         return [
             "text" => $response,
@@ -228,7 +228,7 @@ class Trivia
         
         return [
             "text" => $response,
-            "quick_reply" => [
+            "quick_replies" => [
                 [
                     "content_type" => "text",
                     "title" => "General questions",
@@ -258,7 +258,7 @@ class Trivia
                     "title" => "Animal questions",
                     "payload" => "animal"
                 ]
-            ] == $category
+            ]
         ];
     }
 
