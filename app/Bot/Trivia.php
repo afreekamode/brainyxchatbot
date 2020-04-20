@@ -200,16 +200,7 @@ class Trivia
 
     public static function checkAnswer($answer)
     {
-        $solution = Cache::get("solution");
         $category = Cache::get("category");
-
-        if ($solution == strtolower($answer)) {
-            $response = "Correct!";
-        } else {
-            $response = "Wrong. Correct answer is $solution";
-        }
-        //clear solution
-        Cache::forget("solution");
         $cat = [
             [
                 "content_type" => "text",
@@ -245,12 +236,22 @@ class Trivia
     shuffle($this->categories);
     $pre_category = $this->categories[] = $category;
     if($pre_category == $category){
+        return $pre_category;
+    }
+        $solution = Cache::get("solution");
+        if ($solution == strtolower($answer)) {
+            $response = "Correct!";
+        } else {
+            $response = "Wrong. Correct answer is $solution";
+        }
+        //clear solution
+        Cache::forget("solution");
+        
         return [
             "text" => $response,
             $pre_category
         ];
     }
-}
 
     public function toMessage()
     {

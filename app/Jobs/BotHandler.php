@@ -66,14 +66,11 @@ class BotHandler implements ShouldQueue
             $bot->reply(Trivia::getAnimal());
         }else if ($custom["type"] == Trivia::$NEW_BYE) {
             $bot->reply(Trivia::getByeMsg());
-        }else if ($custom["type"] == Trivia::$NEW_HELLO || $custom["type"] == Trivia::$NEW_HI || $custom["type"] == 'Thank you' || $custom["type"] == 'Thanks') {
+        }else if ($custom["type"] == Trivia::$NEW_HELLO || $custom["type"] == Trivia::$NEW_HI) {
                 $bot->reply(Trivia::getHello());
-        }else if ($custom["type"] == "Good Moring" || $custom["type"] == "Morning" || $custom["type"] == 'Good morning Brainy') {
-            $bot->reply("Good mornig! Wanna play game?");
-        }else if ($custom["type"] == "Good Afternoon" || $custom["type"] == "Afternoon" || $custom["type"] == 'Good Afternoon Brainy') {
-            $bot->reply("Good Afternoon! Wanna play game?");
-        }else if ($custom["type"] == "Good Evening" || $custom["type"] == "Evening" || $custom["type"] == 'Good Evening Brainy') {
-            $bot->reply("Hi Evening! Wanna play game?");
+        }else if ($custom["type"] == Trivia::$NEW_GREET){
+            $greet = Trivia::$NEW_GREET;
+            $bot->reply("$greet ! Wanna play game?");
         }else if ($custom["type"] == "yes" || $custom["type"] == "yes i wanna play game" || $custom["type"] == "yes i want to play game" || $custom["type"] == 'wanna play' || $custom["type"] == 'lets play game' || $custom["type"] == 'lets play') {
             $bot->reply("Ok fine pick your choice from the menu");
             $bot->reply(Trivia::getMenu());
