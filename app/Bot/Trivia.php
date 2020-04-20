@@ -197,16 +197,15 @@ class Trivia
         ];
     }
 
-    public static function getGreet()
+    public static function getGreet($greeting)
     {
-        $solution = Cache::get("solution");
-        $response = "$solution, do you wanna play games?";
+        $response = "$greeting, do you wanna play games? here are some options";
         return [
             "text" => $response,
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "Menu",
+                    "title" => "Options",
                     "payload" => "menu"
                 ]
             ]
