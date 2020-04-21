@@ -254,7 +254,7 @@ class Trivia
 
     public static function checkAnswer($answer)
     {
-        $category = Cache::get("category");
+        $category = Cache::get("reply");
         $solution = Cache::get("solution");
         if ($solution == strtolower($answer)) {
             $response = "Correct 👍!";
@@ -301,6 +301,7 @@ class Trivia
             ];
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
+                Cache::forever("reply", $text);
             }
         }
 
