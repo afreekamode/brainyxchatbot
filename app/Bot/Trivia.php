@@ -230,7 +230,7 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "Nex Question",
+                    "title" => $category,
                     "payload" => $category
                 ]
             ]
