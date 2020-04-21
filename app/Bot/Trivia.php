@@ -9,7 +9,7 @@ class Trivia
 {
     public static $NEW_QUESTION = "new";
     public static $NEW_ANIMAL = "animal";
-    public static $NEW_MATHS = "Science: Mathematics";
+    public static $NEW_MATHS = "maths";
     public static $NEW_SPORT = "sport";
     public static $NEW_CATOON = "catoon";
     public static $NEW_MOVIE = "movie";
@@ -180,46 +180,7 @@ class Trivia
         ];
     }
 
-    public static function nextOpt()
-    {
-        $response = 'Pick a category';
-        Cache::forget("solution");
-            $nextOpts = [
-            "quick_replies" => [
-                [
-                    "content_type" => "text",
-                    "title" => "General questions",
-                    "payload" => "new"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Catoon questions",
-                    "payload" => "catoon"
-                ], [
-                    "content_type" => "text",
-                    "title" => "Maths questions",
-                    "payload" => "maths"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Sport questions",
-                    "payload" => "sport"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Movie questions",
-                    "payload" => "movie"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Animal questions",
-                    "payload" => "animal"
-                ]
-            ]
-        ];
-
-    }
-
+    
     public static function getByeMsg()
     {
         $response = 'Byee see you around !';
@@ -269,7 +230,7 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => $category,
+                    "title" => "Nex Question",
                     "payload" => $category
                 ]
             ]

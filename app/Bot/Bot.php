@@ -44,37 +44,37 @@ class Bot
                     "answer" => $matches[0]
                 ]
             ];
-        } else if (preg_match("/^(new|next)(\s*question)?\$/i", $text, $matches)) {
+        } else if (preg_match("/^(new|next|General|General Knowledge)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_QUESTION,
                 "data" => []
             ];
-        }else if (preg_match("/^(catoon|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(catoon|Entertainment: Cartoon & Animations)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_CATOON,
                 "data" => []
             ];
-        }else if (preg_match("/^(maths|next|Science: Mathematics)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(maths|Mathematics|Science: Mathematics)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_MATHS,
                 "data" => []
             ];
-        }else if (preg_match("/^(sport|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(sport|Sports)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_SPORT,
                 "data" => []
             ];
-        } else if (preg_match("/^(animal|next)(\s*question)?\$/i", $text, $matches)) {
+        } else if (preg_match("/^(animal|next|Animals)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_ANIMAL,
                 "data" => []
             ];
-        }else if (preg_match("/^(movie|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(movie|Entertainment: Film)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_MOVIE,
                 "data" => []
             ];
-        }else if (preg_match("/^(bye|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(bye|good bye)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_BYE,
                 "data" => []
@@ -118,32 +118,32 @@ class Bot
                     "answer" => $payload
                 ]
             ];
-        } else if ($payload === "get-started") {
+        } else if ($payload === "get-started" || $payload === "General Knowledge") {
             return [
                 "type" => "get-started",
                 "data" => []
             ];
-        }else if ($payload === "get-animal") {
+        }else if ($payload === "get-animal" || $payload === "Animals") {
             return [
                 "type" => "get-animal",
                 "data" => []
             ];
-        }else if ($payload === "catoon") {
+        }else if ($payload === "catoon" || $payload === "Entertainment: Cartoon & Animations") {
             return [
                 "type" => "catoon",
                 "data" => []
             ];
-        }else if ($payload === "sport") {
+        }else if ($payload === "sport" || $payload === "Sports") {
             return [
                 "type" => "sport",
                 "data" => []
             ];
-        }else if ($payload === "movie") {
+        }else if ($payload === "movie" || $payload === "Entertainment: Film") {
             return [
                 "type" => "movie",
                 "data" => []
             ];
-        }else if ($payload === "maths") {
+        }else if ($payload === "maths" || $payload === "Science: Mathematics") {
             return [
                 "type" => "maths",
                 "data" => []
