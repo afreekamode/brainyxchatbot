@@ -5,7 +5,6 @@ namespace App\Bot;
 use Dotenv\Result\Result;
 use Illuminate\Support\Facades\Cache;
 
-
 class Trivia
 {
     public static $NEW_QUESTION = "new";
@@ -199,22 +198,9 @@ class Trivia
         ];
     }
 
-    public function getTiming()
-    {
-        $dayperiod = time("H");
-        if($dayperiod >= 1 ||$dayperiod <= 12){
-        return "Good Morning ☁️";
-        }else if($dayperiod > 12 || $dayperiod <= 18){
-        return "Good Afternoon ☀️";
-        }elseif($dayperiod > 18 || $dayperiod <= 24){
-            return "Good Evening 🌛";
-        }
-    }
-
     public static function getGreet($greeting)
     {
-        $me = $this->getTiming();
-        $response = "$me, do you wanna play games? here are some options";
+        $response = "$greeting, do you wanna play games? here are some options";
         return [
             "text" => $response,
             "quick_replies" => [
