@@ -54,7 +54,7 @@ class Bot
                 "type" => Trivia::$NEW_CATOON,
                 "data" => []
             ];
-        }else if (preg_match("/^(maths|next)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(maths|next|Science: Mathematics)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_MATHS,
                 "data" => []

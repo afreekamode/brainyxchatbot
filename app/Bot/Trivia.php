@@ -126,7 +126,6 @@ class Trivia
     public static function getHello()
     {
         $response = 'Hi Welcome to BrainyX ! would you like to refresh your mind? Then check the following options';
-        $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
             "text" => $response,
@@ -181,6 +180,46 @@ class Trivia
         ];
     }
 
+    public static function nextOpt()
+    {
+        $response = 'Pick a category';
+        Cache::forget("solution");
+            $nextOpts = [
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "General questions",
+                    "payload" => "new"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Catoon questions",
+                    "payload" => "catoon"
+                ], [
+                    "content_type" => "text",
+                    "title" => "Maths questions",
+                    "payload" => "maths"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Sport questions",
+                    "payload" => "sport"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Movie questions",
+                    "payload" => "movie"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Animal questions",
+                    "payload" => "animal"
+                ]
+            ]
+        ];
+
+    }
+
     public static function getByeMsg()
     {
         $response = 'Byee see you around !';
@@ -230,32 +269,8 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => "General questions",
-                    "payload" => "new"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Catoon questions",
-                    "payload" => "catoon"
-                ], [
-                    "content_type" => "text",
-                    "title" => "Science: Mathematics",
-                    "payload" => "maths"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Sport questions",
-                    "payload" => "sport"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Movie questions",
-                    "payload" => "movie"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Animal questions",
-                    "payload" => "animal"
+                    "title" => $category,
+                    "payload" => $category
                 ]
             ]
         ];
