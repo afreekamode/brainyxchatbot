@@ -232,6 +232,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Next Question",
                     "payload" => $category
+                ], 
+                [
+                    "content_type" => "text",
+                    "title" => "Categories",
+                    "payload" => "menu"
                 ]
             ]
         ];
