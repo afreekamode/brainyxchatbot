@@ -74,7 +74,7 @@ class Bot
                 "type" => Trivia::$NEW_MOVIE,
                 "data" => []
             ];
-        }else if (preg_match("/^(bye|good bye)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(bye|good bye | good night)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_BYE,
                 "data" => []
