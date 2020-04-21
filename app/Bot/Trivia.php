@@ -9,7 +9,7 @@ class Trivia
 {
     public static $NEW_QUESTION = "new";
     public static $NEW_ANIMAL = "animal";
-    public static $NEW_MATHS = "maths";
+    public static $NEW_MATHS = "Science: Mathematics";
     public static $NEW_SPORT = "sport";
     public static $NEW_CATOON = "catoon";
     public static $NEW_MOVIE = "movie";
