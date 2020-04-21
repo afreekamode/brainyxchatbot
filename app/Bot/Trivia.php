@@ -198,9 +198,21 @@ class Trivia
         ];
     }
 
+    public function getTiming()
+    {
+        if($this->time >= 1 ||$this->time <= 12){
+        return "Good Morning ☁️";
+        }else if($this->time > 12 || $this->time <= 18){
+        return "Good Afternoon ☀️";
+        }elseif($this->time > 18 || $this->time <= 24){
+            return "Good Evening 🌛";
+        }
+    }
+
     public static function getGreet($greeting)
     {
-        $response = "$greeting, do you wanna play games? here are some options";
+        $me = $this->getTiming();
+        $response = "$me, do you wanna play games? here are some options";
         return [
             "text" => $response,
             "quick_replies" => [
