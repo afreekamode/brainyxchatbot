@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Cache;
 class Trivia
 {
     public static $NEW_QUESTION = "new";
-    public static $NEW_ANIMAL = "Animals";
-    public static $NEW_MATHS = "Science: Mathematics";
+    public static $NEW_ANIMAL = "animal";
+    public static $NEW_MATHS = "maths";
     public static $NEW_SPORT = "sport";
     public static $NEW_CATOON = "catoon";
     public static $NEW_MOVIE = "movie";
@@ -230,7 +230,7 @@ class Trivia
             "quick_replies" => [
                 [
                     "content_type" => "text",
-                    "title" => $category,
+                    "title" => "Next Question",
                     "payload" => $category
                 ]
             ]
@@ -241,7 +241,7 @@ class Trivia
     {
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
-        $reply = htmlspecialchars_decode("Category: $this->category", ENT_QUOTES | ENT_HTML5);
+        $reply = htmlspecialchars_decode("$this->category", ENT_QUOTES | ENT_HTML5);
 
         $response = [
             "attachment" => [
