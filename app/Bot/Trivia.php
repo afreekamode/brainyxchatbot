@@ -280,6 +280,7 @@ class Trivia
     {
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
+        $reply = htmlspecialchars_decode("Category: $this->category", ENT_QUOTES | ENT_HTML5);
 
         $response = [
             "attachment" => [
@@ -301,7 +302,7 @@ class Trivia
             ];
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
-                Cache::forever("reply", $text);
+                Cache::forever("reply", $reply);
             }
         }
 
