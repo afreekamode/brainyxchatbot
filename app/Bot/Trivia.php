@@ -26,6 +26,7 @@ class Trivia
     private $options;
     private $solution;
     private $category;
+    private $unsplash;
 
     public function __construct(array $data)
     {
@@ -36,6 +37,9 @@ class Trivia
         shuffle($this->options);
         $this->solution = $answer;
         $this->category = $data["category"];
+        $this->image = $data["urls"]['thumb'];
+        $this->download = $data["links"][2];
+        $this->user = $data["user"][2];
     }
 
     public static function getNew()
@@ -219,6 +223,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Options",
                     "payload" => "menu"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Search image",
+                    "payload" => "image"
                 ]
             ]
         ];
@@ -235,6 +244,10 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Options",
                     "payload" => "menu"
+                ],[
+                    "content_type" => "text",
+                    "title" => "Search image",
+                    "payload" => "image"
                 ]
             ]
         ];
