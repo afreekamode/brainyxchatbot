@@ -100,6 +100,18 @@ class Bot
                 "text" => $text,
                 "data" => []
             ];
+        }else if (preg_match("/^(i need image|i need picture|i need pics|pictures)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_IMAGE,
+                "text" => $text,
+                "data" => []
+            ];
+        }else if (preg_match("/(?:|i need|need)\s*a\s\K[^\.,]+/", $text, $matches)) {
+            return [
+                "type" => Trivia::$NEW_SRCH_IMG,
+                "text" => $text,
+                "data" => []
+            ];
         }
         return [
             "type" => "unknown",
@@ -161,6 +173,16 @@ class Bot
         }else if ($payload === "menu") {
             return [
                 "type" => "menu",
+                "data" => []
+            ];
+        }else if ($payload === "image") {
+            return [
+                "type" => "image",
+                "data" => []
+            ];
+        }else if ($payload === "search") {
+            return [
+                "type" => "search",
                 "data" => []
             ];
         }

@@ -15,6 +15,8 @@ class Trivia
     public static $NEW_MOVIE = "movie";
     public static $NEW_BYE = "bye";
     public static $NEW_HELLO = "hello";
+    public static $NEW_IMAGE = "image";
+    public static $NEW_SRCH_IMG = "search";
     public static $NEW_HI = "hi";
     public static $NEW_MENU = "menu";
     public static $NEW_GREET = "greet";
@@ -139,6 +141,30 @@ class Trivia
         ];
     }
 
+    public static function searchImage($search)
+    {
+        //clear any past solutions left in the cache
+        Cache::forget("solution");
+        $client_id = env('UNSPLASH_CLIENT_ID');
+        //make API call and decode result to get general-knowledge trivia question
+        $ch = curl_init("https://api.unsplash.com/search/photos/?query=$search&client_id=$client_id&page=1&rel='first'&rel='next'");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = json_decode(curl_exec($ch), true)["results"][0];
+
+        return new Trivia($result);
+    }
+
+    public static function searchIMG()
+    {
+        $response = 'To search for an immage just typy "I need follow by object name eg. I need a car:picure or i need a flower:image or i need an office:pics" 👋';
+        $solution = Cache::get("solution");
+        Cache::forget("solution");
+        return [
+            "text" => $response,
+        ];
+    }
     public static function getMenu()
     {
         $response = 'Pick a category';
@@ -198,6 +224,7 @@ class Trivia
         ];
     }
 
+
     public static function getGreet($greeting)
     {
         $response = "$greeting, do you wanna play games? here are some options";
@@ -237,6 +264,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Categories",
                     "payload" => "menu"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Search image",
+                    "payload" => "image"
                 ]
             ]
         ];
