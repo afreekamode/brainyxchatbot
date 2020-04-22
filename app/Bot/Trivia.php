@@ -131,7 +131,7 @@ class Trivia
     
     public static function getHello()
     {
-        $response = 'Hi Welcome to BrainyX, would you like to refresh your mind? Then check the following options';
+        $response = 'Hi Welcome to BrainyX, would you like to refresh your mind or need a picture? Then check the following options';
         Cache::forget("solution");
         return [
             "text" => $response,
@@ -140,6 +140,11 @@ class Trivia
                     "content_type" => "text",
                     "title" => "Menu",
                     "payload" => "menu"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Search image",
+                    "payload" => "image"
                 ]
             ]
         ];

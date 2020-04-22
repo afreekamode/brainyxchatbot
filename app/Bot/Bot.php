@@ -100,7 +100,7 @@ class Bot
                 "text" => $text,
                 "data" => []
             ];
-        }else if (preg_match("/^(i need image|i pictures|image)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(image|pictures|image)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_IMAGE,
                 "text" => $text,
