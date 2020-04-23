@@ -26,7 +26,10 @@ class Trivia
     private $options;
     private $solution;
     private $category;
-    private $unsplash;
+    private $unsplashimg;
+    private $unsplashurl;
+    private $unsplashuser;
+    private $unsplashinstagram;
 
     public function __construct(array $data)
     {
@@ -37,6 +40,10 @@ class Trivia
         shuffle($this->options);
         $this->solution = $answer;
         $this->category = $data["category"];
+        $this->unsplashimg = $data["urls"]["thumb"];
+        $this->unsplashimgurl = $data["links"]["download"].'?force=true';
+        $this->unsplashuser = $data["user"]["name"];
+        $this->unsplashinstagram = $data["user"]["instagram_username"];
     }
 
     public static function getNew()
@@ -160,42 +167,7 @@ class Trivia
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = json_decode(curl_exec($ch), true)['results'][$next];
-        if($result>0){
-        $imag = $result["urls"]["thumb"];
-        $btn =$result["links"]["download"].'?force=true';
-        $image = "Picture by:".$result["user"]["name"]."<br>Instagram: @".$result["user"]["instagram_username"]."<br><a href='$btn' download><img src='$imag'></a>"; // Access Array data
-        $response = htmlspecialchars_decode($image, ENT_QUOTES | ENT_HTML5);
-        return [
-            "text" => $response,
-            "quick_replies" => [
-                [
-                    "content_type" => "text",
-                    "title" => "Next pics",
-                    "payload" => $next+1
-                ],[
-                    "content_type" => "text",
-                    "title" => "Question Options",
-                    "payload" => "menu"
-                ]
-            ]
-        ];
-        }else{
-            $response = "Nothing found please try another search term";
-            return [
-                "text" => $response,
-                "quick_replies" => [
-                    [
-                        "content_type" => "text",
-                        "title" => "Search image",
-                        "payload" => "image"
-                    ],[
-                        "content_type" => "text",
-                        "title" => "Question Options",
-                        "payload" => "menu"
-                    ]
-                ]
-            ];
-        }
+        return new Trivia($result);
     }
 
     public static function searchIMG()
@@ -356,7 +328,40 @@ class Trivia
                 Cache::forever("nextBtn", $nextBtn);
             }
         }
+        
+        return $response;
+    }
 
+    public function toMessageImg()
+    {
+        //compose message
+        $nextBtn  = htmlspecialchars_decode(0, ENT_QUOTES | ENT_HTML5);
+        $response = [
+            "attachment" => [
+                "type" => "template",
+                "payload" => [
+                    "template_type" => "media",
+                    "elements"=>[
+                        "media_type"=>"image",
+                        "url"=>$this->unsplashimg,
+                    ],
+                    "buttons" => [
+                        "type"=>"web_url",
+                        "url" => $this->unsplashimgurl,
+                        "title"=>"Save"
+                    ],
+                    "buttons" => [
+                        "type"=>"web_url",
+                        "url" => $this->unsplashinstagram,
+                        "title"=>"Instagram"
+                    ],
+                    "message"=>$this->unsplashuser
+                ]
+            ]
+        ];
+        if($response){
+            Cache::forever("nextBtn", $nextBtn);
+        }
         return $response;
     }
 }
