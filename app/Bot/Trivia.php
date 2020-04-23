@@ -163,8 +163,9 @@ class Trivia
         if($result>0){
         $imag = $result["urls"]["thumb"];
         $btn =$result["links"]["download"].'?force=true';
-        $response = "Picture by:".$result["user"]["name"]."<br>Instagram: @".$result["user"]["instagram_username"]."<br><img src='$imag'><br><a href='$btn' download>Donwload picture</a><br>"; // Access Array data
-         return [
+        $image = "Picture by:".$result["user"]["name"]."<br>Instagram: @".$result["user"]["instagram_username"]."<br><a href='$btn' download><img src='$imag'></a>"; // Access Array data
+        $response = htmlspecialchars_decode($image, ENT_QUOTES | ENT_HTML5);
+        return [
             "text" => $response,
             "quick_replies" => [
                 [
@@ -329,7 +330,7 @@ class Trivia
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
         $reply = htmlspecialchars_decode("$this->category", ENT_QUOTES | ENT_HTML5);
-        $nextBtn  = 1;
+        $nextBtn  = htmlspecialchars_decode(1, ENT_QUOTES | ENT_HTML5);
         $response = [
             "attachment" => [
                 "type" => "template",
