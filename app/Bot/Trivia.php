@@ -150,24 +150,59 @@ class Trivia
         ];
     }
 
-    public static function searchImage($search)
+    public static function searchImage($search, $next)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
+        $next = Cache::get("nextBtn");
+
         $client_id = env('UNSPLASH_CLIENT_ID');
         //make API call and decode result to get general-knowledge trivia question
-        $ch = curl_init("https://api.unsplash.com/search/photos/?query=$search&client_id=$client_id&page=1&rel='first'&rel='next'");
+        $ch = curl_init("https://api.unsplash.com/search/photos/?query=$search&client_id=$client_id&per_page=30&page=10");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = json_decode(curl_exec($ch), true)["results"][0];
-
-        return new Trivia($result);
+        $result = json_decode(curl_exec($ch), true)['results'][$next];
+        if($result>0){
+        $imag = $result["urls"]["thumb"];
+        $btn =$result["links"]["download"].'?force=true';
+        $response = "Picture by:".$result["user"]["name"]."<br>Instagram: @".$result["user"]["instagram_username"]."<br><img src='$imag'><br><a href='$btn' download>Donwload picture</a><br>"; // Access Array data
+         return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "Next pics",
+                    "payload" => $next
+                ],[
+                    "content_type" => "text",
+                    "title" => "Question Options",
+                    "payload" => "menu"
+                ]
+            ]
+        ];
+        }else{
+            $response = "Nothing found please try nother search term";
+            return [
+                "text" => $response,
+                "quick_replies" => [
+                    [
+                        "content_type" => "text",
+                        "title" => "Search image",
+                        "payload" => "image"
+                    ],[
+                        "content_type" => "text",
+                        "title" => "Question Options",
+                        "payload" => "menu"
+                    ]
+                ]
+            ];
+        }
     }
 
     public static function searchIMG()
     {
-        $response = 'To search for an immage just typy "I need follow by object name eg. I need a car:picure or i need a flower:image or i need an office:pics" 👋';
+        $response = 'To search for an image just typy "I need follow by object name follow by: then picture or image eg. I need a car:picture or i need a flower:image or i need an office:pics" 👋';
         $solution = Cache::get("solution");
         Cache::forget("solution");
         return [
@@ -297,7 +332,7 @@ class Trivia
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
         $reply = htmlspecialchars_decode("$this->category", ENT_QUOTES | ENT_HTML5);
-
+        $nextBtn  = 1;
         $response = [
             "attachment" => [
                 "type" => "template",
@@ -319,6 +354,7 @@ class Trivia
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
                 Cache::forever("reply", $reply);
+                Cache::forever("nextBtn", $nextBtn);
             }
         }
 
