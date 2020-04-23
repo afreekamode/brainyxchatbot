@@ -147,7 +147,7 @@ class Trivia
         ];
     }
 
-    public static function searchImage($search, $next)
+    public static function searchImage($search)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
@@ -180,7 +180,7 @@ class Trivia
             ]
         ];
         }else{
-            $response = "Nothing found please try nother search term";
+            $response = "Nothing found please try another search term";
             return [
                 "text" => $response,
                 "quick_replies" => [
@@ -330,7 +330,7 @@ class Trivia
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
         $reply = htmlspecialchars_decode("$this->category", ENT_QUOTES | ENT_HTML5);
-        $nextBtn  = htmlspecialchars_decode(1, ENT_QUOTES | ENT_HTML5);
+        $nextBtn  = htmlspecialchars_decode(0, ENT_QUOTES | ENT_HTML5);
         $response = [
             "attachment" => [
                 "type" => "template",
@@ -352,6 +352,7 @@ class Trivia
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
                 Cache::forever("reply", $reply);
+            }else{
                 Cache::forever("nextBtn", $nextBtn);
             }
         }
