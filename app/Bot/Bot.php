@@ -103,7 +103,7 @@ class Bot
         }else if (preg_match("/(?:|i need|need)\s*a\s\K[^\.,]+/", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_IMAGE,
-                "text" => $text,
+                "text" => $matches,
                 "data" => []
             ];
         }else if (preg_match("/^(image|pictures|image)(\s*question)?\$/i", $text, $matches)) {
@@ -218,6 +218,8 @@ class Bot
     {
         if (method_exists($data, "toMessage")) {
             $data = $data->toMessage();
+        }else if (method_exists($data, "toMessageImg")) {
+            $data =  $data->toMessageImg();
         }else if (is_string($data)) {
             $data = ["text" => $data];
         }
