@@ -166,9 +166,7 @@ class Trivia
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = json_decode(curl_exec($ch), true)['results'][$next];
-        if($result>0){  
-            $this->toMessageImg();
-        }
+        return new Trivia($result);
     }
 
     public static function nextImage($next)
