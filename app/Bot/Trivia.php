@@ -157,7 +157,7 @@ class Trivia
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
-        $next = Cache::get("nextBtn");
+        $next = 0;
 
         $client_id = env('UNSPLASH_CLIENT_ID');
         //make API call and decode result to get general-knowledge trivia question
@@ -167,7 +167,7 @@ class Trivia
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = json_decode(curl_exec($ch), true)['results'][$next];
         if($result>0){  
-        return $this->toMessageImg();
+            return new Trivia($result);
         }
     }
 
