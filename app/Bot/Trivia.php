@@ -17,6 +17,7 @@ class Trivia
     public static $NEW_HELLO = "hello";
     public static $NEW_IMAGE = "image";
     public static $NEW_SRCH_IMG = "search";
+    public static $NEXT_IMAGE = 1;
     public static $NEW_HI = "hi";
     public static $NEW_MENU = "menu";
     public static $NEW_GREET = "greet";
@@ -27,9 +28,8 @@ class Trivia
     private $solution;
     private $category;
     private $unsplashimg;
-    private $unsplashurl;
+    private $unsplashimgurl;
     private $unsplashuser;
-    private $unsplashinstagram;
 
     public function __construct(array $data)
     {
@@ -43,7 +43,6 @@ class Trivia
         $this->unsplashimg = $data["urls"]["thumb"];
         $this->unsplashimgurl = $data["links"]["download"].'?force=true';
         $this->unsplashuser = $data["user"]["name"];
-        $this->unsplashinstagram = $data["user"]["instagram_username"];
     }
 
     public static function getNew()
@@ -148,13 +147,13 @@ class Trivia
                 [
                     "content_type" => "text",
                     "title" => "Search image",
-                    "payload" => "image"
+                    "payload" => "search"
                 ]
             ]
         ];
     }
 
-    public static function searchImage($search)
+    public static function newImage($search)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
@@ -167,7 +166,20 @@ class Trivia
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = json_decode(curl_exec($ch), true)['results'][$next];
+        if($result>0){  
         return new Trivia($result);
+        }
+    }
+
+    public static function nextImage()
+    {
+        //clear any past solutions left in the cache
+        Cache::forget("solution");
+        $next = Cache::get("nextBtn");
+        $result = ['results'][$next];
+        if($result>0){    
+        return $this->checkImage($next);
+        }
     }
 
     public static function searchIMG()
@@ -237,7 +249,7 @@ class Trivia
                 [
                     "content_type" => "text",
                     "title" => "Search image",
-                    "payload" => "image"
+                    "payload" => "search"
                 ]
             ]
         ];
@@ -246,7 +258,7 @@ class Trivia
 
     public static function getGreet($greeting)
     {
-        $response = "$greeting, do you wanna play games? here are some options";
+        $response = "$greeting, do you wanna play games or like to get some images? here are some options";
         return [
             "text" => $response,
             "quick_replies" => [
@@ -257,7 +269,7 @@ class Trivia
                 ],[
                     "content_type" => "text",
                     "title" => "Search image",
-                    "payload" => "image"
+                    "payload" => "search"
                 ]
             ]
         ];
@@ -291,10 +303,36 @@ class Trivia
                 [
                     "content_type" => "text",
                     "title" => "Search image",
-                    "payload" => "image"
+                    "payload" => "search"
                 ]
             ]
         ];
+    }
+
+    public static function checkImage($next)
+    {
+        $solution = Cache::get("foundimage");
+        $next = Cache::get("nextBtn");
+        if ($solution) {
+        $response = "Here is your search result"; 
+        return [
+            "text" => $response,
+            "quick_replies" => [
+                [
+                    "content_type" => "text",
+                    "title" => "Categories",
+                    "payload" => "menu"
+                ],
+                [
+                    "content_type" => "text",
+                    "title" => "Next image",
+                    "payload" => $next+1
+                ]
+            ]
+        ];
+    } else {
+        $response = "No image found for your search";
+    }
     }
 
     public function toMessage()
@@ -302,7 +340,6 @@ class Trivia
         //compose message
         $text = htmlspecialchars_decode("Question: $this->question", ENT_QUOTES | ENT_HTML5);
         $reply = htmlspecialchars_decode("$this->category", ENT_QUOTES | ENT_HTML5);
-        $nextBtn  = htmlspecialchars_decode(0, ENT_QUOTES | ENT_HTML5);
         $response = [
             "attachment" => [
                 "type" => "template",
@@ -324,8 +361,6 @@ class Trivia
             if($this->solution == $option) {
                 Cache::forever("solution", $letters[$i]);
                 Cache::forever("reply", $reply);
-            }else{
-                Cache::forever("nextBtn", $nextBtn);
             }
         }
         
@@ -350,17 +385,20 @@ class Trivia
                         "url" => $this->unsplashimgurl,
                         "title"=>"Save"
                     ],
-                    "buttons" => [
-                        "type"=>"web_url",
-                        "url" => $this->unsplashinstagram,
-                        "title"=>"Instagram"
-                    ],
-                    "message"=>$this->unsplashuser
+                    "message"=>"Picture by $this->unsplashuser",
+                    "quick_replies" => [
+                        [
+                            "content_type" => "text",
+                            "title" => "Next Image",
+                            "payload" => 1
+                        ]
+                    ]
                 ]
             ]
         ];
         if($response){
             Cache::forever("nextBtn", $nextBtn);
+            Cache::forever("foundimage", $this->unsplashimg);
         }
         return $response;
     }

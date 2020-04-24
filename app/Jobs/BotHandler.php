@@ -74,13 +74,16 @@ class BotHandler implements ShouldQueue
             }else{
             $bot->reply(Trivia::getGreet($custom["text"]));
             }
-        }else if ($custom["type"] == Trivia::$NEW_IMAGE){
-            $bot->reply(Trivia::searchIMG());
         }else if ($custom["type"] == Trivia::$NEW_SRCH_IMG){
+            $bot->reply(Trivia::searchIMG());
+        }else if ($custom["type"] == Trivia::$NEW_IMAGE){
             $img = $custom["text"];
-            preg_match("/(?:|i need)\s*a\s\K[^\.,]+/", $img, $matches);
+            preg_match("/(?:|i need)\s*a\s\K[^\.,:]+/", $img, $matches);
             $bot->reply("Here are some $matches pictures");
-            $bot->reply(Trivia::searchImage($matches));
+            $bot->reply(Trivia::newImage($matches));
+        }else if ($custom["type"] == Cache::get("nextBtn")){
+            $next = Cache::get("nextBtn");
+            $bot->reply(Trivia::checkImage($next));
         }else if ($custom["type"] == "yes" || $custom["type"] == "yes i wanna play game" || $custom["type"] == "yes i want to play game" || $custom["type"] == 'wanna play' || $custom["type"] == 'lets play game' || $custom["type"] == 'lets play') {
             $bot->reply("Ok fine pick your choice from the menu");
             $bot->reply(Trivia::getMenu());
