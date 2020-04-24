@@ -171,14 +171,14 @@ class Trivia
         }
     }
 
-    public static function nextImage()
+    public static function nextImage($next)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
         $next = Cache::get("nextBtn");
         $result = ['results'][$next];
         if($result>0){    
-        return $this->checkImage($next);
+        return $this->checkImage();
         }
     }
 
@@ -308,7 +308,7 @@ class Trivia
         ];
     }
 
-    public static function checkImage($next)
+    public static function checkImage()
     {
         $solution = Cache::get("foundimage");
         $next = Cache::get("nextBtn");
