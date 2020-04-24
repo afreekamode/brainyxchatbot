@@ -379,6 +379,7 @@ class Trivia
                     "elements"=>[
                         "media_type"=>"image",
                         "url"=>$this->unsplashimg,
+                        ]
                     ],
                     "buttons" => [
                         "type"=>"web_url",
@@ -394,7 +395,6 @@ class Trivia
                         ]
                     ]
                 ]
-            ]
         ];
         if($response){
             Cache::forever("nextBtn", $nextBtn);
