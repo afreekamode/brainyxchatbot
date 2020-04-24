@@ -78,9 +78,8 @@ class BotHandler implements ShouldQueue
             $bot->reply(Trivia::searchIMG());
         }else if ($custom["type"] == Trivia::$NEW_IMAGE){
             $img = $custom["text"];
-            preg_match("/(?:|i need)\s*a\s\K[^\.,:]+/", $img, $matches);
-            $bot->reply("Here are some $matches pictures");
-            $bot->reply(Trivia::newImage($matches));
+            $bot->reply("Here are some $img pictures");
+            $bot->reply(Trivia::newImage($img));
         }else if ($custom["type"] == Cache::get("nextBtn")){
             $next = Cache::get("nextBtn");
             $bot->reply(Trivia::checkImage($next));

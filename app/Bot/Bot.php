@@ -100,13 +100,13 @@ class Bot
                 "text" => $text,
                 "data" => []
             ];
-        }else if (preg_match("/^(image|pictures|image)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/(?:|i need|need)\s*a\s\K[^\.,]+/", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_IMAGE,
                 "text" => $text,
                 "data" => []
             ];
-        }else if (preg_match("/(?:|i need|need)\s*a\s\K[^\.,]+/", $text, $matches)) {
+        }else if (preg_match("/^(image|pictures|image)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_SRCH_IMG,
                 "text" => $text,
