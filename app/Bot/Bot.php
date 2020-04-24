@@ -112,6 +112,12 @@ class Bot
                 "text" => $text,
                 "data" => []
             ];
+        }else if (preg_match("/^(next pictures|next image)(0-9)(\s*question)?\$/i", $text, $matches)) {
+            return [
+                "type" => "nextimage",
+                "text" => $text,
+                "data" => []
+            ];
         }
         return [
             "type" => "unknown",
