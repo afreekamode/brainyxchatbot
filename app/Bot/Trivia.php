@@ -153,7 +153,7 @@ class Trivia
         ];
     }
 
-    public static function newImage($search)
+    public static function newImage($search,$next)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
@@ -184,8 +184,7 @@ class Trivia
 
     public static function searchIMG()
     {
-        $response = 'To search for an image just typy "I need follow by object name follow by: then picture or image eg. I need a car:picture or i need a flower:image or i need an office:pics" 👋';
-        $solution = Cache::get("solution");
+        $response = 'To search for an image just typy "I need follow by object name follow by: then picture or image eg. I need a car:picture or i need a flower:image or i need an office:pics" 👍';
         Cache::forget("solution");
         return [
             "text" => $response,
