@@ -70,7 +70,7 @@ class BotHandler implements ShouldQueue
                 $bot->reply(Trivia::getHello());
         }else if ($custom["type"] == Trivia::$NEW_GREET){
             if($custom["text"]=="good night"){
-            $bot->reply("Good night and have a wonderfull dreams");
+            $bot->reply("Good night and have a wonderfull dreams!");
             }else{
             $bot->reply(Trivia::getGreet($custom["text"]));
             }
@@ -81,9 +81,10 @@ class BotHandler implements ShouldQueue
             $bot->reply("Here are some $img pictures");
             $next = Cache::get("nextBtn");
             $bot->reply(Trivia::newImage($img,$next));
-        }else if ($custom["type"] == "nextimage"){
+        }else if ($custom["type"] == Trivia::$NEXT_IMAGE){
             $next = Cache::get("nextBtn");
-            $bot->reply(Trivia::nextImage($next));
+            $img = $custom["text"];
+            $bot->reply(Trivia::nextImage($img,$next));
         }else if ($custom["type"] == "yes" || $custom["type"] == "yes i wanna play game" || $custom["type"] == "yes i want to play game" || $custom["type"] == 'wanna play' || $custom["type"] == 'lets play game' || $custom["type"] == 'lets play') {
             $bot->reply("Ok fine pick your choice from the menu");
             $bot->reply(Trivia::getMenu());

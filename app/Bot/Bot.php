@@ -94,7 +94,7 @@ class Bot
                 "type" => Trivia::$NEW_MENU,
                 "data" => []
             ];
-        }else if (preg_match("/^(good morning|good morning brainy|good afternoon|good afternoon brainy|morning|afternoon|evening|good evening|good evening brainy)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(good morning|good morning brainy|good afternoon|good afternoon brainy|morning|afternoon|evening|good evening|good night)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_GREET,
                 "text" => $text,
@@ -106,15 +106,15 @@ class Bot
                 "text" => $matches,
                 "data" => []
             ];
-        }else if (preg_match("/^(image|pictures|image)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(image|pictures|search)(\s*question)?\$/i", $text, $matches)) {
             return [
                 "type" => Trivia::$NEW_SRCH_IMG,
                 "text" => $text,
                 "data" => []
             ];
-        }else if (preg_match("/^(next pictures|next image)(0-9)(\s*question)?\$/i", $text, $matches)) {
+        }else if (preg_match("/^(next pictures|next image|0-9|nextimg)(\s*question)?\$/i", $text, $matches)) {
             return [
-                "type" => "nextimage",
+                "type" => Trivia::$NEXT_IMAGE,
                 "text" => $text,
                 "data" => []
             ];
@@ -189,6 +189,11 @@ class Bot
         }else if ($payload === "search") {
             return [
                 "type" => "search",
+                "data" => []
+            ];
+        }else if ($payload === "nextimg") {
+            return [
+                "type" => "nextimg",
                 "data" => []
             ];
         }

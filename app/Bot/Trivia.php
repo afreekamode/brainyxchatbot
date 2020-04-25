@@ -17,7 +17,7 @@ class Trivia
     public static $NEW_HELLO = "hello";
     public static $NEW_IMAGE = "image";
     public static $NEW_SRCH_IMG = "search";
-    public static $NEXT_IMAGE = 1;
+    public static $NEXT_IMAGE = "nextimg";
     public static $NEW_HI = "hi";
     public static $NEW_MENU = "menu";
     public static $NEW_GREET = "greet";
@@ -169,12 +169,11 @@ class Trivia
         return new Trivia($result);
     }
 
-    public static function nextImage($next)
+    public static function nextImage($search,$next)
     {
         //clear any past solutions left in the cache
         Cache::forget("solution");
-        $next = Cache::get("nextBtn");
-        $result = ['results'][$next];
+        $result = $this->newImage($search,$next);
         if($result>0){    
         return $this->checkImage();
         }
@@ -323,7 +322,7 @@ class Trivia
                 [
                     "content_type" => "text",
                     "title" => "Next image",
-                    "payload" => $next+1
+                    "payload" => "nextimg"
                 ]
             ]
         ];
@@ -372,29 +371,31 @@ class Trivia
             "attachment" => [
                 "type" => "template",
                 "payload" => [
-                    "template_type" => "media",
+                    "template_type" => "generic",
                     "elements"=>[
+                        "title"=>"Picture by $this->unsplashuser",
+                        [
                         "media_type"=>"image",
-                        "url"=>$this->unsplashimg,
-                        ]
-                    ],
+                        "image_url"=>$this->unsplashimg
+                        ],
                     "buttons" => [
+                        [
                         "type"=>"web_url",
                         "url" => $this->unsplashimgurl,
                         "title"=>"Save"
-                    ],
-                    "message"=>"Picture by $this->unsplashuser",
-                    "quick_replies" => [
+                        ],
                         [
                             "content_type" => "text",
                             "title" => "Next Image",
-                            "payload" => 1
+                            "payload" => "nextimg"
                         ]
-                    ]
+                    ],
                 ]
-        ];
+            ]
+        ]
+    ];
         if($response){
-            Cache::forever("nextBtn", $nextBtn);
+            Cache::forever("nextBtn", $nextBtn++);
             Cache::forever("foundimage", $this->unsplashimg);
         }
         return $response;
