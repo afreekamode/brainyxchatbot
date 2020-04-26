@@ -79,10 +79,10 @@ class BotHandler implements ShouldQueue
         }else if ($custom["type"] == Trivia::$NEW_IMAGE){
             $img = $custom["text"];
             $bot->reply("Here are some $img pictures");
-            $next = Cache::get("nextBtn");
-            $bot->reply(Trivia::newImage($img,$next));
+            $bot->reply(Trivia::toMessageImg());
         }else if ($custom["type"] == Trivia::$NEXT_IMAGE){
-            $next = Cache::get("nextBtn");
+            $next1 = Cache::get("nextBtn");
+            $next = $next1+1;
             $img = $custom["text"];
             $bot->reply(Trivia::nextImage($img,$next));
         }else if ($custom["type"] == "yes" || $custom["type"] == "yes i wanna play game" || $custom["type"] == "yes i want to play game" || $custom["type"] == 'wanna play' || $custom["type"] == 'lets play game' || $custom["type"] == 'lets play') {

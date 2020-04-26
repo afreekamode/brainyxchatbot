@@ -175,7 +175,7 @@ class Trivia
         Cache::forget("solution");
         $result = $this->newImage($search,$next);
         if($result>0){    
-        return $this->checkImage();
+        return $result;
         }
     }
 
@@ -305,32 +305,6 @@ class Trivia
         ];
     }
 
-    public static function checkImage()
-    {
-        $solution = Cache::get("foundimage");
-        $next = Cache::get("nextBtn");
-        if ($solution) {
-        $response = "Here is your search result"; 
-        return [
-            "text" => $response,
-            "quick_replies" => [
-                [
-                    "content_type" => "text",
-                    "title" => "Categories",
-                    "payload" => "menu"
-                ],
-                [
-                    "content_type" => "text",
-                    "title" => "Next image",
-                    "payload" => "nextimg"
-                ]
-            ]
-        ];
-    } else {
-        $response = "No image found for your search";
-    }
-    }
-
     public function toMessage()
     {
         //compose message
@@ -395,8 +369,7 @@ class Trivia
         ]
     ];
         if($response){
-            Cache::forever("nextBtn", $nextBtn++);
-            Cache::forever("foundimage", $this->unsplashimg);
+            Cache::forever("nextBtn", $nextBtn);
         }
         return $response;
     }
