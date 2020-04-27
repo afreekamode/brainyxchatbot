@@ -28,7 +28,7 @@ $result='[{"id":"6lSBynPRaAQ","created_at":"2018-11-16T05:03:27-05:00","updated_
 //   print_r($someArray);        // Dump all data of the Array
   return $someArray["user"]['name']."\n".$someArray["urls"]['thumb']."\n"."@".$someArray["user"]["instagram_username"]."\n".$someArray["links"]['download']; // Access Array data
    }
-    }
+}
 
     public static function searchImage($search, $next)
     {
